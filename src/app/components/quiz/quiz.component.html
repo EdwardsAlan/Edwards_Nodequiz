@@ -1,0 +1,34 @@
+<!--/*
+============================================
+; Title: NodeQuiz
+; Author: Alan Edwards
+; Modified by: William Thomason
+; Date: Oct 6 2019
+; Description: NodeQuiz
+;===========================================
+*/-->
+
+  
+<mat-card class="quiz-container">
+     <div fxLayout="column">
+        <mat-card class="mat-elevation-z8">
+            <ol>
+                <li *ngFor="let question of quiz.questions">
+                     {{ question.question }}
+                     <br><br>
+                         <mat-radio-group aria-label="Select an option">
+                      <mat-radio-button class="quiz-radio-group" *ngFor="let questionAnswers of question.choices" value="questionAnswers">{{ questionAnswers }} <br>                                  </mat-radio-button>
+                              </mat-radio-group>
+                               <br><br>
+                     </li>
+     </ol> 
+            </mat-card>
+    </div>
+</mat-card>
+
+<mat-card class="lower-screen">  
+    <div *ngIf="!submited" class="buttons-container">
+      <button [routerLink]="['/']" class="cancel-button quiz-button">Back</button>
+      <button (click)="submit()" class="submit-button quiz-button">Submit</button>
+    </div>
+</mat-card>

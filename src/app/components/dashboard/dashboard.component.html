@@ -1,0 +1,25 @@
+<!--/*
+============================================
+; Title: NodeQuiz
+; Author: Alan Edwards
+; Date: Oct 6 2019
+; Description: NodeQuiz
+;===========================================
+*/-->
+<h1 align-center>Welcome to NodeQuiz</h1>
+<div fxLayout="row" fxLayoutGap="10px">
+  <div *ngFor="let quiz of quizzes"></div>
+</div>
+
+<div class="container">
+  <mat-card color="secondary" class="form">
+    <mat-card-content class="buttonGroup">
+      <h2>Select your quiz:</h2>
+<div *ngFor="let quiz of quizzes">
+      <button class="buttonStyle" mat-raised-button color="secondary" routerLink="slideshow/{{quiz.id}}">
+        {{quiz.name}}
+      </button>
+    </div>
+    </mat-card-content>
+  </mat-card>
+</div>  

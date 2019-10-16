@@ -1,0 +1,26 @@
+.container{
+  text-align: center;
+  margin-top: 100px;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif
+}
+
+.form {
+  width: 50%;
+  height: 300px;
+  margin: 0 auto;
+  background-color: #7b1fa2;
+  
+  
+}
+small {
+  color: red;
+  display: block;
+  width: 100%;
+  min-width: 100% !important;
+  margin-top: 10px;
+}
+.inputStyle{
+  margin-top: 50px
+}
+
+
