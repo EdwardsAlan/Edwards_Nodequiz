@@ -25,7 +25,8 @@ app.use(express.static(path.join(__dirname, "../dist/nodequiz")));
 app.use("/", express.static(path.join(__dirname, "../dist/nodequiz")));
 
 // Global variables
-const serverPort = 3000;
+const serverPort = process.env.PORT || 3000; // server port
+
 
 // MongoDB connection string
 const connString =
@@ -35,7 +36,8 @@ const connString =
 mongoose
   .connect(connString, {
     promiseLibrary: require("bluebird"),
-    useNewUrlParser: true
+    useNewUrlParser: true,
+    useUnifiedTopology: true
   })
   .then(() =>
     console.debug("Connection to the Database instance was successful")
