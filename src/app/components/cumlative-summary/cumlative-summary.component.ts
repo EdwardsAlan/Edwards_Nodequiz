@@ -32,7 +32,7 @@ export class CumlativeSummaryComponent implements OnInit {
       if (res) {
         return this.summaries = res;
       } else {
-        return this.errorMessage = "OH NO, I couldn't find the summaries!!!";
+        
       }
 
     })

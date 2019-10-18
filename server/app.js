@@ -58,7 +58,34 @@ app.get("/api/employees/:id", function(req, res, next) {
     }
   });
 });
+app.post('/api/summary',function(req,res,next){
+  const summary={
+    employeeId:req.body.employeeId,
+    quizId:req.body.quizId,
+    score:req.body.score
+  }
 
+  
+summary.create(summary,function(err,summary){
+  if(err){
+    console.log(err);
+    return next(err);
+  }else{
+    res.json(summary);
+  }
+})
+})
+
+app.get('/api/summary',function(req,res,next){
+  summary.find(function(err,summaries){
+    if(err){
+      return next(err)
+    }else{
+      console.log('EEEKK'+summaries)
+      res.json(summaries)
+    }
+  })
+})
 
 // Get quiz by id
 app.get("/api/test/:id", function(req, res, next) {

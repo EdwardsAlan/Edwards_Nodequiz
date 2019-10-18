@@ -9,57 +9,78 @@
 */
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
-import { HttpClient } from "@angular/common/http";
-import { Location } from "@angular/common";
-import { MatDialog, MatDialogConfig } from "@angular/material";
-import { ResultsComponent } from "../results/results.component";
-
-
+import {HttpClient} from '@angular/common/http';
+import { CookieService } from 'ngx-cookie-service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-quiz',
-  templateUrl: "./quiz.component.html",
-  styleUrls: ["./quiz.component.css"]
+  templateUrl: './quiz.component.html',
+  styleUrls: ['./quiz.component.css']
 })
-
 export class QuizComponent implements OnInit {
-  quizId:number;
-  quiz:any;
-  selectedAnswer: string =" ";
-  currentQuestion :any;
-  currentChoices:any;
+quizId:any;
+quiz:any;
+questions:any;
+currentChoices:any;
+quizResults:any;
+employeeId:string;
+questionNumber=0;
+selectedAnswers=[]
+answers=[]
+correctAnswers=[]
+score:any
+qs:any=[];
+q:any=[];
+  constructor(private route:ActivatedRoute,private router:Router, private cookieService: CookieService,private http: HttpClient) {
 
-  constructor(private http: HttpClient, private route: ActivatedRoute, public dialog: MatDialog, private location: Location) {
-    this.quizId= parseInt(this.route.snapshot.paramMap.get("id"), 10);
+    
+    this.employeeId = this.cookieService.get('employeeId');
+    this.quizId= parseInt(this.route.snapshot.paramMap.get("id"))
+    //getting quiz information
     this.http.get('/api/test/'+ this.quizId).subscribe(res=>{
       if(res){
-        console.log(res)
+      console.log(res)
       this.quiz=res;
-      this.currentQuestion=this.quiz.questions[0].question
-      this.currentChoices=this.quiz.questions[0].choices
-     
+        this.questions=this.quiz.questions
+      console.log(this.questions);
       }else{
-        
-      }
 
-    })
+    }
+
+   })
+  }
+  //generating form that will be sent via http post
+  onSubmit(form) {
+    this.quizResults = form;
+    this.quizResults['quizId'] = this.quizId;
+    this.quizResults['employeeId']=this.employeeId
+    console.log(this.quizResults)
+    for(const prop in this.quizResults){
+    if(this.quizResults.hasOwnProperty(prop)){
+      if(prop !== 'employeeId' && prop !== 'quizId' && prop !=='score'){
+        this.selectedAnswers.push(this.quizResults[prop].split(';')[0]);
+
+        this.answers.push(this.quizResults[prop].split(';')[1]);
+      }
+    }
+  }
+let totalInCorrect = this.answers.filter(function(inCorrectAnswer){
+  return inCorrectAnswer==="false";
+})
+let score=(this.questions.length)-totalInCorrect.length
+console.log(score)
+  //sending post request
+   this.http.post('/api/quiz-results/', {
+    employeeId:this.employeeId,
+    quizId:this.quizId,
+    score:this.score,
     
-   }
-   
-   openDialog() {
-    const dialogConfig = new MatDialogConfig();
+  })
 
-    const quizModal = this.dialog.open(ResultsComponent, {
-      width: "50%",
-      height: "80%"
-    });
-   }
-   ngOnInit() {
 
-  
-      }
-     }
-     
-     
-   
- 
+  }
+  ngOnInit() {
+  }
+
+}

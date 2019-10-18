@@ -8,27 +8,52 @@
 ;===========================================
 */-->
 
-  
-<mat-card class="quiz-container">
-     <div fxLayout="column">
-        <mat-card class="mat-elevation-z8">
-            <ol>
-                <li *ngFor="let question of quiz.questions">
-                     {{ question.question }}
-                     <br><br>
-                         <mat-radio-group aria-label="Select an option">
-                      <mat-radio-button class="quiz-radio-group" *ngFor="let questionAnswers of question.choices" value="questionAnswers">{{ questionAnswers }} <br>                                  </mat-radio-button>
-                              </mat-radio-group>
-                               <br><br>
-                     </li>
-     </ol> 
-            </mat-card>
-    </div>
-</mat-card>
+<mat-card>
 
-<mat-card class="lower-screen">  
-    <div *ngIf="!submited" class="buttons-container">
-      <button [routerLink]="['/']" class="cancel-button quiz-button">Back</button>
-      <button (click)="submit()" class="submit-button quiz-button">Submit</button>
-    </div>
-</mat-card>
+    <br>
+    <!-- root mat card content -->
+    <mat-card-content>
+        <!-- Quiz form -->
+        <form #quizForm="ngForm" (ngSubmit)="onSubmit(quizForm.value);">
+          <div *ngFor="let question of questions">
+            <mat-card class="mat-elevation-z8">
+              <mat-card-content>
+
+                <div>
+                  <!-- questions -->
+                  <mat-list>
+                    <div>
+                      <p>Question: </p>
+                      <p>{{question.question}}
+                        
+                      </p>
+                    </div>
+                  </mat-list>
+                  <br>
+                  <!-- answers -->
+                  
+                    <label>Answers:</label>
+                    <div fxLayout="column" fxLayoutGap="10px">
+                        <div *ngFor="let answer of question.choices" style="flex-direction: column;">
+                            <input [(ngModel)]="question[question.questionId-1]" [checked]="question[question.questionId-1]" value="{{answer.answerId}};{{answer.isCorrect}}" name="question{{questionId}}" type="radio" />
+                            {{answer.answertext}}
+                            <div *ngFor="let option of question">{{option.choices}}
+                            </div>
+                        </div>
+                    </div>
+               
+                </div>
+              </mat-card-content>
+            </mat-card>
+          </div>
+          <br>
+          <mat-card-actions>
+           
+            <button type="submit" fxFlex mat-raised-button color="warn">Submit</button>
+          </mat-card-actions>
+        </form>
+    </mat-card-content>
+  </mat-card>
+
+    <button mat-button color="primary" routerLink="/">Return to Slideshow</button>
+    

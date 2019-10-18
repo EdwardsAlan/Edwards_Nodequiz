@@ -52,7 +52,7 @@ module.exports = "<!--/*\n============================================\n; Title:
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!--/*\n============================================\n; Title: NodeQuiz\n; Author: Alan Edwards\n; Modified by: William Thomason\n; Date: Oct 6 2019\n; Description: NodeQuiz\n;===========================================\n*/-->\n\n  \n<mat-card class=\"quiz-container\">\n     <div fxLayout=\"column\">\n        <mat-card class=\"mat-elevation-z8\">\n            <ol>\n                <li *ngFor=\"let question of quiz.questions\">\n                     {{ question.question }}\n                     <br><br>\n                         <mat-radio-group aria-label=\"Select an option\">\n                      <mat-radio-button class=\"quiz-radio-group\" *ngFor=\"let questionAnswers of question.choices\" value=\"questionAnswers\">{{ questionAnswers }} <br>                                  </mat-radio-button>\n                              </mat-radio-group>\n                               <br><br>\n                     </li>\n     </ol> \n            </mat-card>\n    </div>\n</mat-card>\n\n<mat-card class=\"lower-screen\">  \n    <div *ngIf=\"!submited\" class=\"buttons-container\">\n      <button [routerLink]=\"['/']\" class=\"cancel-button quiz-button\">Back</button>\n      <button (click)=\"submit()\" class=\"submit-button quiz-button\">Submit</button>\n    </div>\n</mat-card>"
+module.exports = "<!--/*\n============================================\n; Title: NodeQuiz\n; Author: Alan Edwards\n; Modified by: William Thomason\n; Date: Oct 6 2019\n; Description: NodeQuiz\n;===========================================\n*/-->\n\n<mat-card>\n\n    <br>\n    <!-- root mat card content -->\n    <mat-card-content>\n        <!-- Quiz form -->\n        <form #quizForm=\"ngForm\" (ngSubmit)=\"onSubmit(quizForm.value);\">\n          <div *ngFor=\"let question of questions\">\n            <mat-card class=\"mat-elevation-z8\">\n              <mat-card-content>\n\n                <div>\n                  <!-- questions -->\n                  <mat-list>\n                    <div>\n                      <p>Question: </p>\n                      <p>{{question.question}}\n                        \n                      </p>\n                    </div>\n                  </mat-list>\n                  <br>\n                  <!-- answers -->\n                  \n                    <label>Answers:</label>\n                    <div fxLayout=\"column\" fxLayoutGap=\"10px\">\n                        <div *ngFor=\"let answer of question.choices\" style=\"flex-direction: column;\">\n                            <input [(ngModel)]=\"question[question.questionId-1]\" [checked]=\"question[question.questionId-1]\" value=\"{{answer.answerId}};{{answer.isCorrect}}\" name=\"question{{questionId}}\" type=\"radio\" />\n                            {{answer.answertext}}\n                            <div *ngFor=\"let option of question\">{{option.choices}}\n                            </div>\n                        </div>\n                    </div>\n               \n                </div>\n              </mat-card-content>\n            </mat-card>\n          </div>\n          <br>\n          <mat-card-actions>\n           \n            <button type=\"submit\" fxFlex mat-raised-button color=\"warn\">Submit</button>\n          </mat-card-actions>\n        </form>\n    </mat-card-content>\n  </mat-card>\n\n    <button mat-button color=\"primary\" routerLink=\"/\">Return to Slideshow</button>\n    "
 
 /***/ }),
 
@@ -74,7 +74,7 @@ module.exports = "<!--/*\n============================================\n; Title:
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!--/*\n============================================\n; Title: NodeQuiz\n; Author: Alan Edwards\n; Date: Oct 6 2019\n; Description: NodeQuiz\n;===========================================\n*/-->\n<div class=\"container\">\n  <!-- Quiz button -->\n  <div class=\"quizButton\">\n    <button routerLink=\"/test/{{slideshow}}\">Take Test</button>\n    <button routerLink=\"/\">Back</button>\n  </div>\n  <!-- Slide group -->\n  <div class=\"slides\">\n    <p-carousel [value]=\"presentationSlides\" numVisible=\"1\">\n      <ng-template let-item pTemplate=\"item\">\n        <img style=\"width:40%;\" src=\"./assets/{{selection}}/{{item.image}}\">\n      </ng-template>\n    </p-carousel>\n  </div>\n</div>"
+module.exports = "<!--/*\n============================================\n; Title: NodeQuiz\n; Author: Alan Edwards\n; Date: Oct 6 2019\n; Description: NodeQuiz\n;===========================================\n*/-->\n<div class=\"container\">\n  \n  <!-- Slide group -->\n  <div class=\"slides\">\n    <p-carousel [value]=\"presentationSlides\" numVisible=\"1\">\n      <ng-template let-item pTemplate=\"item\">\n        <img style=\"width:40%;\" src=\"./assets/{{selection}}/{{item.image}}\">\n      </ng-template>\n    </p-carousel>\n  </div>\n</div>\n<!-- Quiz button -->\n<button mat-button color=\"primary\" routerLink=\"/\">Return to Slideshow</button>\n<!-- Take Test button -->\n<button mat-button color=\"primary\" routerLink=\"/test/{{slideshow}}\">Take Test</button>"
 
 /***/ }),
 
@@ -577,9 +577,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
-/* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm5/material.es5.js");
-/* harmony import */ var _results_results_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../results/results.component */ "./src/app/components/results/results.component.ts");
+/* harmony import */ var ngx_cookie_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ngx-cookie-service */ "./node_modules/ngx-cookie-service/ngx-cookie-service.es5.js");
 
 /*
 ============================================
@@ -595,41 +593,66 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 var QuizComponent = /** @class */ (function () {
-    function QuizComponent(http, route, dialog, location) {
+    function QuizComponent(route, router, cookieService, http) {
         var _this = this;
-        this.http = http;
         this.route = route;
-        this.dialog = dialog;
-        this.location = location;
-        this.selectedAnswer = " ";
-        this.quizId = parseInt(this.route.snapshot.paramMap.get("id"), 10);
+        this.router = router;
+        this.cookieService = cookieService;
+        this.http = http;
+        this.questionNumber = 0;
+        this.selectedAnswers = [];
+        this.answers = [];
+        this.correctAnswers = [];
+        this.qs = [];
+        this.q = [];
+        this.employeeId = this.cookieService.get('employeeId');
+        this.quizId = parseInt(this.route.snapshot.paramMap.get("id"));
+        //getting quiz information
         this.http.get('/api/test/' + this.quizId).subscribe(function (res) {
             if (res) {
                 console.log(res);
                 _this.quiz = res;
-                _this.currentQuestion = _this.quiz.questions[0].question;
-                _this.currentChoices = _this.quiz.questions[0].choices;
+                _this.questions = _this.quiz.questions;
+                console.log(_this.questions);
             }
             else {
             }
         });
     }
-    QuizComponent.prototype.openDialog = function () {
-        var dialogConfig = new _angular_material__WEBPACK_IMPORTED_MODULE_5__["MatDialogConfig"]();
-        var quizModal = this.dialog.open(_results_results_component__WEBPACK_IMPORTED_MODULE_6__["ResultsComponent"], {
-            width: "50%",
-            height: "80%"
+    //generating form that will be sent via http post
+    QuizComponent.prototype.onSubmit = function (form) {
+        this.quizResults = form;
+        this.quizResults['quizId'] = this.quizId;
+        this.quizResults['employeeId'] = this.employeeId;
+        console.log(this.quizResults);
+        for (var prop in this.quizResults) {
+            if (this.quizResults.hasOwnProperty(prop)) {
+                if (prop !== 'employeeId' && prop !== 'quizId' && prop !== 'score') {
+                    this.selectedAnswers.push(this.quizResults[prop].split(';')[0]);
+                    this.answers.push(this.quizResults[prop].split(';')[1]);
+                }
+            }
+        }
+        var totalInCorrect = this.answers.filter(function (inCorrectAnswer) {
+            return inCorrectAnswer === "false";
+        });
+        var score = (this.questions.length) - totalInCorrect.length;
+        console.log(score);
+        //sending post request
+        this.http.post('/api/quiz-results/', {
+            employeeId: this.employeeId,
+            quizId: this.quizId,
+            score: this.score,
         });
     };
     QuizComponent.prototype.ngOnInit = function () {
     };
     QuizComponent.ctorParameters = function () { return [
-        { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"] },
         { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["ActivatedRoute"] },
-        { type: _angular_material__WEBPACK_IMPORTED_MODULE_5__["MatDialog"] },
-        { type: _angular_common__WEBPACK_IMPORTED_MODULE_4__["Location"] }
+        { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"] },
+        { type: ngx_cookie_service__WEBPACK_IMPORTED_MODULE_4__["CookieService"] },
+        { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"] }
     ]; };
     QuizComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
