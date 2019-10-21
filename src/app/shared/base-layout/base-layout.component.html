@@ -10,11 +10,11 @@
   <header>
     <mat-toolbar class="menu" role="header" color="primary">
       <mat-toolbar-row>
-        <button mat-button class="toolbar__icon-button mat-button">
+        
           <mat-icon>computer</mat-icon>
-          <span style="margin-left: 5px !important" (click)="navdashboard()"
+          <span style="margin-left: 5px !important" 
             >NodeQuiz</span>
-        </button>
+        
         <div fxFlex></div>
         <button
           mat-icon-button
@@ -23,10 +23,7 @@
           <mat-icon>account_circle</mat-icon>
         </button>
         <mat-menu #menu="matMenu">
-          <button mat-menu-item>
-            <mat-icon>dashboard</mat-icon>
-            <span>Dashboard</span>
-          </button>
+          
           <div fxFlex></div>
           <button (click)="logOut()" mat-menu-item>
             <mat-icon>exit_to_app</mat-icon>

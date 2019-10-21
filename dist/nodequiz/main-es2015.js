@@ -52,7 +52,7 @@ module.exports = "<!--/*\n============================================\n; Title:
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!--/*\n============================================\n; Title: NodeQuiz\n; Author: Alan Edwards\n; Modified by: William Thomason\n; Date: Oct 6 2019\n; Description: NodeQuiz\n;===========================================\n*/-->\n\n<mat-card>\n\n    <br>\n    <!-- root mat card content -->\n    <mat-card-content>\n        <!-- Quiz form -->\n        <form #quizForm=\"ngForm\" (ngSubmit)=\"onSubmit(quizForm.value);\">\n          <div *ngFor=\"let question of questions\">\n            <mat-card class=\"mat-elevation-z8\">\n              <mat-card-content>\n\n                <div>\n                  <!-- questions -->\n                  <mat-list>\n                    <div>\n                      <p>Question: </p>\n                      <p>{{question.question}}\n                        \n                      </p>\n                    </div>\n                  </mat-list>\n                  <br>\n                  <!-- answers -->\n                  \n                    <label>Answers:</label>\n                    <div fxLayout=\"column\" fxLayoutGap=\"10px\">\n                        <div *ngFor=\"let answer of question.choices\" style=\"flex-direction: column;\">\n                            <input [(ngModel)]=\"question[question.questionId-1]\" [checked]=\"question[question.questionId-1]\" value=\"{{answer.answerId}};{{answer.isCorrect}}\" name=\"question{{questionId}}\" type=\"radio\" />\n                            {{answer.answertext}}\n                            <div *ngFor=\"let option of question\">{{option.choices}}\n                            </div>\n                        </div>\n                    </div>\n               \n                </div>\n              </mat-card-content>\n            </mat-card>\n          </div>\n          <br>\n          <mat-card-actions>\n           \n            <button type=\"submit\" fxFlex mat-raised-button color=\"warn\">Submit</button>\n          </mat-card-actions>\n        </form>\n    </mat-card-content>\n  </mat-card>\n\n    <button mat-button color=\"primary\" routerLink=\"/\">Return to Slideshow</button>\n    "
+module.exports = "<!--/*\n============================================\n; Title: NodeQuiz\n; Author: Alan Edwards\n; Modified by: William Thomason\n; Date: Oct 6 2019\n; Description: NodeQuiz\n;===========================================\n*/-->\n\n\n<mat-card>\n\n  <br>\n  <!-- root mat card content -->\n  <mat-card-content>\n      <!-- Quiz form -->\n      <form #quizForm=\"ngForm\" (ngSubmit)=\"onSubmit(quizForm.value);\">\n        <div *ngFor=\"let question of questions\">\n          <mat-card class=\"mat-elevation-z8\">\n            <mat-card-content>\n\n              <div>\n                <!-- questions -->\n                <mat-list>\n                  <div>\n                    <p>Question: </p>\n                    <p>{{question.question}}\n                      \n                    </p>\n                  </div>\n                </mat-list>\n                <br>\n                <!-- answers -->\n                <div fxLayout=\"row\" fxLayoutGap=\"10px\">\n                  <label>Answers:</label>\n                </div>\n                  <div fxLayout=\"column\" fxLayoutGap=\"10px\">\n                      <div *ngFor=\"let answer of question.answers\" style=\"flex-direction: column;\">\n                        <input [(ngModel)]=\"questions[question._id]\" [checked]=\"questions[question._id]\" value=\"{{answer._id}};{{answer.isCorrect}}\" name=\"question{{question._id}}\" type=\"radio\" />\n                        {{answer.answer}}\n                        <ol>\n                          <li *ngFor=\"let question of quiz.questions\">\n                               {{ question.question }}\n                               <br><br>\n                                   <mat-radio-group aria-label=\"Select an option\">\n                                <mat-radio-button class=\"quiz-radio-group\" *ngFor=\"let questionAnswers of question.choices\" value=\"questionAnswers\">{{ questionAnswers }} <br>                                  </mat-radio-button>\n                                        </mat-radio-group>\n                                         <br><br>\n                               </li>\n               </ol>\n                          \n                      </div>\n                  </div>\n             \n              </div>\n            </mat-card-content>\n          </mat-card>\n        </div>\n        <br>\n        <mat-card-actions>\n         \n          <button type=\"submit\" fxFlex mat-raised-button color=\"warn\">Submit</button>\n        </mat-card-actions>\n      </form>\n  </mat-card-content>\n</mat-card>\n\n  <button mat-button color=\"primary\" routerLink=\"/\">Return to Slideshow</button>\n  "
 
 /***/ }),
 
@@ -85,7 +85,7 @@ module.exports = "<!--/*\n============================================\n; Title:
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!--/*\n============================================\n; Title: NodeQuiz\n; Author: Alan Edwards\n; Date: Oct 6 2019\n; Description: NodeQuiz\n;===========================================\n*/-->\n<div>\n  <header>\n    <mat-toolbar class=\"menu\" role=\"header\" color=\"primary\">\n      <mat-toolbar-row>\n        <button mat-button class=\"toolbar__icon-button mat-button\">\n          <mat-icon>computer</mat-icon>\n          <span style=\"margin-left: 5px !important\" (click)=\"navdashboard()\"\n            >NodeQuiz</span>\n        </button>\n        <div fxFlex></div>\n        <button\n          mat-icon-button\n          class=\"toolbar__icon-button\"\n          [matMenuTriggerFor]=\"menu\">\n          <mat-icon>account_circle</mat-icon>\n        </button>\n        <mat-menu #menu=\"matMenu\">\n          <button mat-menu-item>\n            <mat-icon>dashboard</mat-icon>\n            <span>Dashboard</span>\n          </button>\n          <div fxFlex></div>\n          <button (click)=\"logOut()\" mat-menu-item>\n            <mat-icon>exit_to_app</mat-icon>\n            <span>Logout</span>\n          </button>\n        </mat-menu>\n      </mat-toolbar-row>\n    </mat-toolbar>\n  </header>\n  <main>\n    <router-outlet></router-outlet>\n  </main>\n</div>"
+module.exports = "<!--/*\n============================================\n; Title: NodeQuiz\n; Author: Alan Edwards\n; Date: Oct 6 2019\n; Description: NodeQuiz\n;===========================================\n*/-->\n<div>\n  <header>\n    <mat-toolbar class=\"menu\" role=\"header\" color=\"primary\">\n      <mat-toolbar-row>\n        \n          <mat-icon>computer</mat-icon>\n          <span style=\"margin-left: 5px !important\" \n            >NodeQuiz</span>\n        \n        <div fxFlex></div>\n        <button\n          mat-icon-button\n          class=\"toolbar__icon-button\"\n          [matMenuTriggerFor]=\"menu\">\n          <mat-icon>account_circle</mat-icon>\n        </button>\n        <mat-menu #menu=\"matMenu\">\n          \n          <div fxFlex></div>\n          <button (click)=\"logOut()\" mat-menu-item>\n            <mat-icon>exit_to_app</mat-icon>\n            <span>Logout</span>\n          </button>\n        </mat-menu>\n      </mat-toolbar-row>\n    </mat-toolbar>\n  </header>\n  <main>\n    <router-outlet></router-outlet>\n  </main>\n</div>"
 
 /***/ }),
 
@@ -602,8 +602,8 @@ let QuizComponent = class QuizComponent {
         this.http = http;
         this.questionNumber = 0;
         this.selectedAnswers = [];
-        this.answers = [];
-        this.correctAnswers = [];
+        this.choices = [];
+        this.correctAnswer = [];
         this.qs = [];
         this.q = [];
         this.employeeId = this.cookieService.get('employeeId');
@@ -611,10 +611,12 @@ let QuizComponent = class QuizComponent {
         //getting quiz information
         this.http.get('/api/test/' + this.quizId).subscribe(res => {
             if (res) {
-                console.log(res);
+                //console.log(res)
                 this.quiz = res;
                 this.questions = this.quiz.questions;
-                console.log(this.questions);
+                this.currentQuestion = this.quiz.questions[0].question;
+                this.currentChoices = this.quiz.questions[0].choices;
+                //console.log(this.quiz);
             }
             else {
             }
@@ -630,11 +632,11 @@ let QuizComponent = class QuizComponent {
             if (this.quizResults.hasOwnProperty(prop)) {
                 if (prop !== 'employeeId' && prop !== 'quizId' && prop !== 'score') {
                     this.selectedAnswers.push(this.quizResults[prop].split(';')[0]);
-                    this.answers.push(this.quizResults[prop].split(';')[1]);
+                    this.choices.push(this.quizResults[prop].split(';')[1]);
                 }
             }
         }
-        let totalInCorrect = this.answers.filter(function (inCorrectAnswer) {
+        let totalInCorrect = this.choices.filter(function (inCorrectAnswer) {
             return inCorrectAnswer === "false";
         });
         let score = (this.questions.length) - totalInCorrect.length;

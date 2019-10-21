@@ -100,7 +100,7 @@ app.get("/api/test/:id", function(req, res, next) {
   });
 });
 
-
+console.log(this.questions)
 
 /**
  * Creates an express server and listens on port 3000

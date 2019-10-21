@@ -8,52 +8,63 @@
 ;===========================================
 */-->
 
+
 <mat-card>
 
-    <br>
-    <!-- root mat card content -->
-    <mat-card-content>
-        <!-- Quiz form -->
-        <form #quizForm="ngForm" (ngSubmit)="onSubmit(quizForm.value);">
-          <div *ngFor="let question of questions">
-            <mat-card class="mat-elevation-z8">
-              <mat-card-content>
+  <br>
+  <!-- root mat card content -->
+  <mat-card-content>
+      <!-- Quiz form -->
+      <form #quizForm="ngForm" (ngSubmit)="onSubmit(quizForm.value);">
+        <div *ngFor="let question of questions">
+          <mat-card class="mat-elevation-z8">
+            <mat-card-content>
 
-                <div>
-                  <!-- questions -->
-                  <mat-list>
-                    <div>
-                      <p>Question: </p>
-                      <p>{{question.question}}
-                        
-                      </p>
-                    </div>
-                  </mat-list>
-                  <br>
-                  <!-- answers -->
-                  
-                    <label>Answers:</label>
-                    <div fxLayout="column" fxLayoutGap="10px">
-                        <div *ngFor="let answer of question.choices" style="flex-direction: column;">
-                            <input [(ngModel)]="question[question.questionId-1]" [checked]="question[question.questionId-1]" value="{{answer.answerId}};{{answer.isCorrect}}" name="question{{questionId}}" type="radio" />
-                            {{answer.answertext}}
-                            <div *ngFor="let option of question">{{option.choices}}
-                            </div>
-                        </div>
-                    </div>
-               
+              <div>
+                <!-- questions -->
+                <mat-list>
+                  <div>
+                    <p>Question: </p>
+                    <p>{{question.question}}
+                      
+                    </p>
+                  </div>
+                </mat-list>
+                <br>
+                <!-- answers -->
+                <div fxLayout="row" fxLayoutGap="10px">
+                  <label>Answers:</label>
                 </div>
-              </mat-card-content>
-            </mat-card>
-          </div>
-          <br>
-          <mat-card-actions>
-           
-            <button type="submit" fxFlex mat-raised-button color="warn">Submit</button>
-          </mat-card-actions>
-        </form>
-    </mat-card-content>
-  </mat-card>
+                  <div fxLayout="column" fxLayoutGap="10px">
+                      <div *ngFor="let answer of question.answers" style="flex-direction: column;">
+                        <input [(ngModel)]="questions[question._id]" [checked]="questions[question._id]" value="{{answer._id}};{{answer.isCorrect}}" name="question{{question._id}}" type="radio" />
+                        {{answer.answer}}
+                        <ol>
+                          <li *ngFor="let question of quiz.questions">
+                               {{ question.question }}
+                               <br><br>
+                                   <mat-radio-group aria-label="Select an option">
+                                <mat-radio-button class="quiz-radio-group" *ngFor="let questionAnswers of question.choices" value="questionAnswers">{{ questionAnswers }} <br>                                  </mat-radio-button>
+                                        </mat-radio-group>
+                                         <br><br>
+                               </li>
+               </ol>
+                          
+                      </div>
+                  </div>
+             
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+        <br>
+        <mat-card-actions>
+         
+          <button type="submit" fxFlex mat-raised-button color="warn">Submit</button>
+        </mat-card-actions>
+      </form>
+  </mat-card-content>
+</mat-card>
 
-    <button mat-button color="primary" routerLink="/">Return to Slideshow</button>
-    
+  <button mat-button color="primary" routerLink="/">Return to Slideshow</button>
+  

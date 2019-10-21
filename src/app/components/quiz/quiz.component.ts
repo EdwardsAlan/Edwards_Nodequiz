@@ -23,12 +23,13 @@ quizId:any;
 quiz:any;
 questions:any;
 currentChoices:any;
+currentQuestion :any;
 quizResults:any;
 employeeId:string;
 questionNumber=0;
 selectedAnswers=[]
-answers=[]
-correctAnswers=[]
+choices=[]
+correctAnswer=[]
 score:any
 qs:any=[];
 q:any=[];
@@ -40,14 +41,18 @@ q:any=[];
     //getting quiz information
     this.http.get('/api/test/'+ this.quizId).subscribe(res=>{
       if(res){
-      console.log(res)
+      //console.log(res)
       this.quiz=res;
         this.questions=this.quiz.questions
-      console.log(this.questions);
+        this.currentQuestion=this.quiz.questions[0].question
+        this.currentChoices=this.quiz.questions[0].choices
+      //console.log(this.quiz);
+      
       }else{
+        
 
     }
-
+    
    })
   }
   //generating form that will be sent via http post
@@ -61,11 +66,11 @@ q:any=[];
       if(prop !== 'employeeId' && prop !== 'quizId' && prop !=='score'){
         this.selectedAnswers.push(this.quizResults[prop].split(';')[0]);
 
-        this.answers.push(this.quizResults[prop].split(';')[1]);
+        this.choices.push(this.quizResults[prop].split(';')[1]);
       }
     }
   }
-let totalInCorrect = this.answers.filter(function(inCorrectAnswer){
+let totalInCorrect = this.choices.filter(function(inCorrectAnswer){
   return inCorrectAnswer==="false";
 })
 let score=(this.questions.length)-totalInCorrect.length
@@ -77,7 +82,7 @@ console.log(score)
     score:this.score,
     
   })
-
+  
 
   }
   ngOnInit() {
