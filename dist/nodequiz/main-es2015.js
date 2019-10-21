@@ -1,3 +1,11 @@
+/*
+============================================
+; Title: NodeQuiz
+; Author: Alan Edwards
+; Date: Oct 6 2019
+; Description: NodeQuiz
+;===========================================
+*/
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([["main"],{
 
 /***/ "./$$_lazy_route_resource lazy recursive":
